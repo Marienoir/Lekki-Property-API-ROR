@@ -29,3 +29,5 @@
 /config/master.key
 
 /public/swagger-ui
+
+env

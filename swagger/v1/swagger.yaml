@@ -6,7 +6,7 @@ info:
 paths:
   "/properties":
     post:
-      summary: createProperty property
+      summary: create property
       parameters: []
       responses:
         '200':
@@ -17,33 +17,44 @@ paths:
             schema:
               type: object
               properties:
-                propertyOwner:
+                property_address:
                   type: string
-                propertyAddress:
+                property_type:
                   type: string
-                numberOfBathrooms:
+                number_of_bathrooms:
                   type: integer
-                numberOfBedrooms:
+                number_of_bedrooms:
                   type: integer
-                numberOfKitchens:
+                number_of_sitting_rooms:
                   type: integer
-                numberOfSittingRooms:
+                number_of_toilets:
                   type: integer
-                numberOfToilets:
+                number_of_kitchens:
                   type: integer
+                property_owner:
+                  type: string
                 description:
                   type: string
+                valid_from:
+                  type: string
+                  format: date
+                valid_to:
+                  type: string
+                  format: date
               required:
-              - propertyOwner
-              - propertyAddress
+              - property_address
+              - property_type
+              - valid_from
+              - valid_to
+              - description
+              - property_owner
+              - number_of_kitchens
+              - number_of_toilets
+              - number_of_bathrooms
+              - number_of_bedrooms
+              - number_of_sitting_rooms
     get:
-      summary: findAllProperties property
-      responses:
-        '200':
-          description: successful
-  "/properties/search":
-    get:
-      summary: search property
+      summary: find_all property
       responses:
         '200':
           description: successful
@@ -56,15 +67,37 @@ paths:
       schema:
         type: string
     get:
-      summary: findPropertiesById property
+      summary: find_by_id property
       responses:
         '200':
           description: successful
     put:
-      summary: updatePropertyById property
+      summary: update property
+      parameters: []
       responses:
         '200':
           description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                number_of_bathrooms:
+                  type: integer
+                number_of_bedrooms:
+                  type: integer
+                number_of_sitting_rooms:
+                  type: integer
+                number_of_toilets:
+                  type: integer
+                number_of_kitchens:
+                  type: integer
+                description:
+                  type: string
+                valid_from:
+                  type: string
+                  format: date
 servers:
 - url: http://{defaultHost}
   variables:

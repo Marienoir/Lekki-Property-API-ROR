@@ -15,17 +15,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_23_212616) do
   enable_extension "plpgsql"
 
   create_table "properties", force: :cascade do |t|
-    t.string "propertyAddress"
-    t.string "propertyType"
-    t.integer "numberOfBedrooms"
-    t.integer "numberOfSittingRooms"
-    t.integer "numberOfKitchens"
-    t.integer "numberOfBathrooms"
-    t.integer "numberOfToilets"
-    t.string "propertyOwner"
+    t.string "property_address"
+    t.string "property_type"
+    t.integer "number_of_bedrooms"
+    t.integer "number_of_sitting_rooms"
+    t.integer "number_of_kitchens"
+    t.integer "number_of_bathrooms"
+    t.integer "number_of_toilets"
+    t.string "property_owner"
     t.string "description"
-    t.date "validFrom"
-    t.date "validTo"
+    t.date "valid_from"
+    t.date "valid_to"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

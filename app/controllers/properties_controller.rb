@@ -1,36 +1,21 @@
 class PropertiesController < ApplicationController
-  def findAllProperties
-    render json: { status: 200, message: "Properties retrieved successfully", data: Property.all }
+  def find_all
+    @properties = Property.all
+    puts "=============>: #{property_params}"
+    # @properties = @properties.filter_by_owner(params[:property_owner])
+    # @properties = @properties.filter_by_address(params[:property_address]) if params[:property_address].present?
+    # @properties = Property.scoped
+    # @properties = @properties.filter_by_owner(params[:propertyOwner]) unless params[:propertyOwner].blank?
+    # @properties = @properties.filter_by_address(params[:propertyAddress]) unless params[:propertyAddress].blank?
+    # if params[:property_owner]
+    #   @properties = Property.all.filter_by_owner(params[:property_owner])
+    # else
+    #   @properties = Property.all
+    # end
+    render json: { status: 200, message: "Properties retrieved successfully", data: @properties }
   end
 
-  #     if params[:propertyAddress] && params[:propertyType] && params[:numberOfBathrooms]
-  #       property = Property.where(propertyAddress: params[:propertyAddress], propertyType: params[:propertyType], numberOfBathrooms: params[:numberOfBathrooms])
-  #     else
-  #       property = Property.all
-  #     end
-  #     render json: property
-  #   end
-
-  def search
-    @property = Property.search(params[:propertyOwner], params[:numberOfBathrooms])
-    # propertyOwner = "%#{params[:propertyOwner]}%"
-    # numberOfBathrooms = "%#{params[:numberOfBathrooms]}%"
-    # numberOfBedrooms = "%#{params[:numberOfBedrooms]}%"
-    # numberOfKitchens = "%#{params[:numberOfKitchens]}%"
-    # numberOfSittingRooms = "%#{params[:numberOfSittingRooms]}%"
-    # numberOfToilets = "%#{params[:numberOfToilets]}%"
-    # propertyAddress = "%#{params[:propertyAddress]}%"
-
-    puts @property
-    # # puts propertyOwner
-    # a = Property.where(
-    #   "propertyOwner LIKE ? OR numberOfBathrooms LIKE ? OR numberOfBedrooms LIKE ? OR numberOfKitchens LIKE ? OR numberOfSittingRooms LIKE ? OR numberOfToilets LIKE ? OR propertyAddress LIKE ? ",
-    #    propertyOwner, numberOfBathrooms, numberOfBedrooms, numberOfKitchens, numberOfSittingRooms, numberOfToilets, propertyAddress)
-
-    render json: params
-  end
-
-  def findPropertiesById
+  def find_by_id
     begin
       property = Property.find(params[:id])
     rescue => exception
@@ -40,28 +25,14 @@ class PropertiesController < ApplicationController
     end
   end
 
-  def findPropertiesByParams
-    @property = Property.where(
-      propertyOwner: params[:propertyOwner],
-      numberOfBathrooms: params[:numberOfBathrooms],
-      numberOfBedrooms: params[:numberOfBedrooms],
-      numberOfKitchens: params[:numberOfKitchens],
-      numberOfSittingRooms: params[:numberOfSittingRooms],
-      numberOfToilets: params[:numberOfToilets],
-      propertyAddress: params[:propertyAddress],
-    )
-
-    render json: @property
-  end
-
-  def createProperty
+  def create
     property = Property.create!(property_params)
     render json: { status: 201, message: "Property created successfully", data: property }, status: 201
   rescue ActiveRecord::RecordInvalid => invalid
     render json: { status: 400, message: invalid.record.errors.full_messages }, status: 400
   end
 
-  def updatePropertyById
+  def update
     begin
       property = Property.find(params[:id])
     rescue => exception
@@ -75,6 +46,6 @@ class PropertiesController < ApplicationController
   private
 
   def property_params
-    params.require(:property).permit(:propertyAddress, :propertyType, :numberOfBathrooms, :numberOfBedrooms, :numberOfSittingRooms, :numberOfToilets, :numberOfKitchens, :propertyOwner, :description, :validFrom, :validTo)
+    params.require(:property).permit(:property_address, :property_type, :number_of_bathrooms, :number_of_bedrooms, :number_of_sitting_rooms, :number_of_toilets, :number_of_kitchens, :property_owner, :description, :valid_from, :valid_to)
   end
 end
