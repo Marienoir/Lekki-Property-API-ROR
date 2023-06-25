@@ -24,7 +24,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_23_212616) do
     t.integer "numberOfToilets"
     t.string "propertyOwner"
     t.string "description"
-    t.date "validFrom", default: new Date(), null: false
+    t.date "validFrom"
     t.date "validTo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

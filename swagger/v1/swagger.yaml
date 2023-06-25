@@ -1,0 +1,72 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/properties":
+    post:
+      summary: createProperty property
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                propertyOwner:
+                  type: string
+                propertyAddress:
+                  type: string
+                numberOfBathrooms:
+                  type: integer
+                numberOfBedrooms:
+                  type: integer
+                numberOfKitchens:
+                  type: integer
+                numberOfSittingRooms:
+                  type: integer
+                numberOfToilets:
+                  type: integer
+                description:
+                  type: string
+              required:
+              - propertyOwner
+              - propertyAddress
+    get:
+      summary: findAllProperties property
+      responses:
+        '200':
+          description: successful
+  "/properties/search":
+    get:
+      summary: search property
+      responses:
+        '200':
+          description: successful
+  "/properties/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: findPropertiesById property
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: updatePropertyById property
+      responses:
+        '200':
+          description: successful
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: 127.0.0.1:3000/
