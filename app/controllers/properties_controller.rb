@@ -1,17 +1,15 @@
 class PropertiesController < ApplicationController
   def find_all
     @properties = Property.all
-    puts "=============>: #{property_params}"
-    # @properties = @properties.filter_by_owner(params[:property_owner])
-    # @properties = @properties.filter_by_address(params[:property_address]) if params[:property_address].present?
-    # @properties = Property.scoped
-    # @properties = @properties.filter_by_owner(params[:propertyOwner]) unless params[:propertyOwner].blank?
-    # @properties = @properties.filter_by_address(params[:propertyAddress]) unless params[:propertyAddress].blank?
-    # if params[:property_owner]
-    #   @properties = Property.all.filter_by_owner(params[:property_owner])
-    # else
-    #   @properties = Property.all
-    # end
+    @properties = @properties.filter_by_owner(params[:property_owner])
+    @properties = @properties.filter_by_bedrooms(params[:number_of_bedrooms])
+    @properties = @properties.filter_by_kitchen(params[:number_of_kitchens])
+    @properties = @properties.filter_by_toilets(params[:number_of_toilets])
+    @properties = @properties.filter_by_sitting_rooms(params[:number_of_sitting_rooms])
+    @properties = @properties.filter_by_bathrooms(params[:number_of_bathrooms])
+    @properties = @properties.filter_by_address(params[:property_address])
+    @properties = @properties.filter_by_type(params[:property_type])
+
     render json: { status: 200, message: "Properties retrieved successfully", data: @properties }
   end
 
