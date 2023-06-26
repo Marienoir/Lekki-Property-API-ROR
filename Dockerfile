@@ -1,22 +1,19 @@
-FROM ruby:3.0.0-alpine
+FROM ruby:3.0-bullseye as base
 
-RUN apk add --update --virtual \
-    runtime-deps \
-    postgresql-client \
-    nodejs \
-    yarn \
-    git \
-    && rm -rf /var/cache/apk/*
+RUN apt-get update -qq && apt-get install -y build-essential apt-utils libpq-dev nodejs
 
-WORKDIR /app
-COPY . /app/
+WORKDIR /docker/app
 
-ENV BUNDLE_PATH /gems
+RUN gem install bundler
+
+COPY Gemfile* ./
+
 RUN bundle install
-RUN yarn install
 
-ENTRYPOINT ["bin/rails"]
+ADD . /docker/app
 
-CMD [ "s","-b","0.0.0.0" ]
+ARG DEFAULT_PORT 3000
 
-EXPOSE 3000
+EXPOSE ${DEFAULT_PORT}
+
+CMD [ "bundle","exec", "puma", "config.ru"]

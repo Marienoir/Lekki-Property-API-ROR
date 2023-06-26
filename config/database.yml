@@ -3,6 +3,10 @@
 default: &default
   adapter: postgresql
   encoding: unicode
+  host: postgres
+  port: 9091
+  username: <%= Rails.application.credentials.dig(:db, :username) %>
+  password: <%= Rails.application.credentials.dig(:db, :password) %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
